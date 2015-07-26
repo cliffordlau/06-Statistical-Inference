@@ -13,4 +13,25 @@
 
 # 1. Librarys -------------------------------------------------------------
 library(ggplot2)
+library(gridExtra)
 library(dplyr)
+
+# 2.1 Exploratory plots ---------------------------------------------------
+data("ToothGrowth")
+tooth <- tbl_df(ToothGrowth)
+
+summary(tooth)
+glimpse(tooth)
+
+levels(tooth$supp)
+
+ggplot(tooth, aes(len)) + geom_histogram(binwidth = 4)
+ggplot(tooth, aes(supp, len, factor(dose))) + geom_boxplot() + facet_grid(. ~ dose)
+
+
+# 2.2 CI T test -----------------------------------------------------------
+fit <- lm(len ~ supp + dose, data = tooth)
+
+t.test(len ~ supp, paired = FALSE, data = tooth)
+t.test(len ~ dose, data = tooth)
+
