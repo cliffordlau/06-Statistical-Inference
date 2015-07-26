@@ -1,8 +1,10 @@
 ---
 title: "Tooth Growth and Supplemen"
 author: "Cliff Lau"
-output: html_document
+output: word_document
 ---
+
+##Exploratory Analysis and Summary
 
 In the analysis we'll use the ToothGrowth dataset:
 ```{r message = F}
@@ -27,3 +29,32 @@ ggplot(tooth, aes(supp, len, factor(dose))) + geom_boxplot() + facet_grid(. ~ do
 
 The histogram shows the distribution of tooth length. We can see that it's mostly in the range of `r min(tooth$len)` to `r max(tooth$len)`, with median of `r median(tooth$len)`.
 
+##Hypothesis Testing and Confidence Interval
+
+To compare length of tooth based on supplement type:
+```{r}
+t.test(len ~ supp, paired = FALSE, data = tooth)
+```
+
+Based on the results above, with p-value > 5%, we do no reject the null hypothesis that the true difference is equal to 0. Also, based on the CI provided, since it includes 0, which means that it's possible that the difference is 0.
+
+```{r}
+tooth2 <-
+  tooth %>%
+  filter(dose != 2.0)
+t.test(len ~ supp, paired = FALSE, data = tooth2)
+
+tooth3 <-
+  tooth %>%
+  filter(dose != 0.5)
+t.test(len ~ supp, paired = FALSE, data = tooth3)
+```
+
+Based on the above, it seems there is evidence that there is a greater than 0 effect with the supplement compairing half a dose to 1 dose. However, when comparing 1 to 2 dose, we found not statistical evidence that there is a effect on tooth length.
+
+##Conclusion
+
+Based on our analysis above, we can conclude the following:
+
+1. There is no difference between the 2 types of suppliment, VC or OJ in tooth length
+2. There is an increase in tooth length when we compare 0.5 to 1 dose of suppliment, however, there are no evidence of difference between 1 and 2 dose.
