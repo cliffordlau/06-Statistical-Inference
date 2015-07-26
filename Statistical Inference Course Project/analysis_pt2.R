@@ -10,10 +10,8 @@
 # supporting appendix material
 # 
 
-
 # 1. Librarys -------------------------------------------------------------
 library(ggplot2)
-library(gridExtra)
 library(dplyr)
 
 # 2.1 Exploratory plots ---------------------------------------------------

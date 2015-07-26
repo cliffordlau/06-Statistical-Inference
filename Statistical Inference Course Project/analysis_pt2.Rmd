@@ -1,0 +1,29 @@
+---
+title: "Tooth Growth and Supplemen"
+author: "Cliff Lau"
+output: html_document
+---
+
+In the analysis we'll use the ToothGrowth dataset:
+```{r message = F}
+library(ggplot2)
+library(dplyr)
+
+data("ToothGrowth")
+tooth <- tbl_df(ToothGrowth)
+```
+
+Some quick summary statistics of the dataset:
+```{r}
+summary(tooth)
+glimpse(tooth)
+```
+
+Some exploratory graphs of the dataset:
+```{r}
+ggplot(tooth, aes(len)) + geom_histogram(binwidth = 4)
+ggplot(tooth, aes(supp, len, factor(dose))) + geom_boxplot() + facet_grid(. ~ dose)
+```
+
+The histogram shows the distribution of tooth length. We can see that it's mostly in the range of `r min(tooth$len)` to `r max(tooth$len)`, with median of `r median(tooth$len)`.
+
